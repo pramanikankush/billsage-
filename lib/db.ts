@@ -13,7 +13,7 @@ export const db = {
      */
     async getUser(userId: string): Promise<User | null> {
         try {
-            const result = await postgres.query<User>(
+            const result = await postgres.query<any>(
                 "SELECT * FROM users WHERE id = $1",
                 [userId]
             )
@@ -28,9 +28,11 @@ export const db = {
                 id: row.id,
                 email: row.email,
                 name: row.name,
-                role: row.role as "user" | "admin",
+                role: "user",
                 organizationId: row.organization_id,
                 createdAt: row.created_at,
+                billUploadCount: row.bill_upload_count || 0,
+                plan: row.plan || "free",
             }
         } catch (error) {
             logError("Database", error, { operation: "getUser", userId })
@@ -49,7 +51,7 @@ export const db = {
                 throw new Error("User ID, email, and name are required")
             }
 
-            const result = await postgres.query<User>(
+            const result = await postgres.query<any>(
                 `INSERT INTO users (id, email, name, role, organization_id, created_at)
                  VALUES ($1, $2, $3, $4, $5, $6)
                  RETURNING *`,
@@ -68,9 +70,11 @@ export const db = {
                 id: row.id,
                 email: row.email,
                 name: row.name,
-                role: row.role as "user" | "admin",
+                role: "user",
                 organizationId: row.organization_id,
                 createdAt: row.created_at,
+                billUploadCount: row.bill_upload_count || 0,
+                plan: row.plan || "free",
             }
 
             logSuccess("Database", "User created successfully", { userId: newUser.id })
@@ -390,6 +394,7 @@ export const db = {
             monthlySavings,
             savingsRate,
             previousMonthSavings,
+            savingsRateTrend: 0,
         }
     },
 }

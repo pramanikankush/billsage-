@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { FileText, LayoutDashboard, Upload, FileSearch, Settings, HelpCircle, LogOut, Shield } from "lucide-react"
+import { FileText, LayoutDashboard, Upload, FileSearch, Settings, HelpCircle, LogOut } from "lucide-react"
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -18,10 +18,9 @@ const secondaryNav = [{ name: "Help Center", href: "/dashboard/help", icon: Help
 
 interface SidebarProps {
   onLogout?: () => void
-  isAdmin?: boolean
 }
 
-export function Sidebar({ onLogout, isAdmin }: SidebarProps) {
+export function Sidebar({ onLogout }: SidebarProps) {
   const pathname = usePathname()
 
   return (
@@ -53,21 +52,6 @@ export function Sidebar({ onLogout, isAdmin }: SidebarProps) {
               </Link>
             )
           })}
-
-          {isAdmin && (
-            <Link
-              href="/admin"
-              className={cn(
-                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
-                pathname.startsWith("/admin")
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground",
-              )}
-            >
-              <Shield className="h-5 w-5" />
-              Admin Portal
-            </Link>
-          )}
         </nav>
 
         <div className="mt-8">

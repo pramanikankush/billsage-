@@ -27,13 +27,13 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen overflow-hidden bg-background">
       {/* Desktop Sidebar */}
       <div className="hidden lg:block">
-        <Sidebar onLogout={handleLogout} isAdmin={user.role === "admin" || user.role === "super_admin"} />
+        <Sidebar onLogout={handleLogout} />
       </div>
 
       {/* Mobile Sidebar */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
         <SheetContent side="left" className="w-64 p-0">
-          <Sidebar onLogout={handleLogout} isAdmin={user.role === "admin" || user.role === "super_admin"} />
+          <Sidebar onLogout={handleLogout} />
         </SheetContent>
       </Sheet>
 

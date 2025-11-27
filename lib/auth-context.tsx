@@ -10,7 +10,6 @@ interface AuthContextType {
   user: User | null
   organization: Organization | null
   isLoading: boolean
-  isAdmin: boolean
   error: string | null
 }
 
@@ -105,10 +104,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     syncUser()
   }, [clerkUser, clerkLoaded])
 
-  const isAdmin = user?.role === "admin" || user?.role === "super_admin"
-
   return (
-    <AuthContext.Provider value={{ user, organization, isLoading, isAdmin, error }}>
+    <AuthContext.Provider value={{ user, organization, isLoading, error }}>
       {children}
     </AuthContext.Provider>
   )

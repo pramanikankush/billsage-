@@ -5,7 +5,7 @@ export interface User {
   email: string
   name: string
   organizationId: string
-  role: "user" | "admin" | "super_admin"
+  role: "user"
   createdAt: string
   billUploadCount: number
   plan: "free" | "pro" | "enterprise"
